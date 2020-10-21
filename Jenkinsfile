@@ -1,5 +1,5 @@
 #!groovy
-@Library('pipeline-libray') _
+@Library('pipline-libray') _
 pipeline {
     agent any
     stages {
