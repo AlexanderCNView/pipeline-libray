@@ -6,7 +6,7 @@ pipeline {
         stage("第一步") {
             steps {
                 script {
-                    pipeline("我是一个执行sh命令的例子")
+                    pipelineJob("我是一个执行sh命令的例子")
                 }
             }
         }
