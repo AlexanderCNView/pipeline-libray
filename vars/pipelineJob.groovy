@@ -1,5 +1,5 @@
 #!groovy
-def call(params) {
+def call(Map params) {
     // 让我们来执行个echo命令
     pipeline {
         agent any
