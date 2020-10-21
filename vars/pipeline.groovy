@@ -7,7 +7,7 @@ def call(params) {
             stage("第一步") {
                 steps {
                     script {
-                        sh "echo ${params}"
+                        echo ${params}
                     }
                 }
             }
