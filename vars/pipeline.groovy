@@ -9,13 +9,12 @@ def call(params) {
             //repoBranch参数后续替换成git parameter不再依赖手工输入,JENKINS-46451【git parameters目前还不支持pipeline】
             string(name:'repoBranch', defaultValue: 'master', description: 'git分支名称')
 
-            string(name:'params', defaultValue: 'master', description: 'git分支名称')
         }
         stages {
             stage("第一步") {
                 steps {
                     script {
-                        echo ${params}
+                        echo ${params.name}
                     }
                 }
             }
