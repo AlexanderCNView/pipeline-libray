@@ -14,7 +14,7 @@ def call(Map params) {
             stage("第一步") {
                 steps {
                     script {
-                        echo ${params.name}
+                        echo '${params.name}'
                     }
                 }
             }
