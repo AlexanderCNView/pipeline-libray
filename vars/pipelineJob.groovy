@@ -5,20 +5,47 @@ def call(Map params) {
         agent any
         parameters {
             //git代码路径【参数值对外隐藏】
-            string(name:'repoUrl', defaultValue: 'git@git.*****.com:*****/*****.git', description: 'git代码路径')
+            string(name:'repoUrl', defaultValue: 'https://github.com/AlexanderCNView/pipeline-libray.git', description: 'git代码路径')
             //repoBranch参数后续替换成git parameter不再依赖手工输入,JENKINS-46451【git parameters目前还不支持pipeline】
-            string(name:'repoBranch', defaultValue: 'master', description: 'git分支名称')
+            string(name:'repoBranch', defaultValue: 'main', description: 'git分支名称')
 
         }
         stages {
-            stage("第一步") {
+            stage('代码拉取并打包') {
                 steps {
-                    script {
-                        echo "${params.name}"
-                    }
+                    checkout([$class: 'GitSCM', branches: [[name: '*/main']],
+                              doGenerateSubmoduleConfigurations: false, extensions: [],
+                              submoduleCfg: [], userRemoteConfigs: [[credentialsId: '6ef41d8b-2079-4ba1-bb68-f1a50f68853c',
+                                                                     url: '${repoUrl}']]])
+                    echo "checkout from ${repoBranch}"
+                    echo "${params.name}"
+                    changeString = getChangeString()
+                    echo "${changeString}"
                 }
             }
         }
     }
 
+}
+
+@NonCPS
+def getChangeString() {
+    MAX_MSG_LEN = 100
+    def changeString = ""
+    echo "Gathering SCM changes"
+    def changeLogSets = currentBuild.changeSets
+    for (int i = 0; i < changeLogSets.size(); i++) {
+        def entries = changeLogSets[i].items
+        for (int j = 0; j < entries.length; j++) {
+            def entry = entries[j]
+            truncated_msg = entry.msg.take(MAX_MSG_LEN)
+            sendMail = sendMail+"${entry.author}@demo.com,"
+            changeString += "--${truncated_msg}  [${entry.author}]\n"
+        }
+    }
+
+    if (!changeString) {
+        changeString = " - 无"
+    }
+    return changeString
 }
