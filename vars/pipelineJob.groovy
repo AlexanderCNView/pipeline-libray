@@ -13,14 +13,16 @@ def call(Map params) {
         stages {
             stage('代码拉取') {
                 steps {
-                    checkout([$class: 'GitSCM', branches: [[name: '*/dev']],
-                              doGenerateSubmoduleConfigurations: false, extensions: [],
-                              submoduleCfg: [], userRemoteConfigs: [[credentialsId: '6ef41d8b-2079-4ba1-bb68-f1a50f68853c',
-                                                                     url: '${repoUrl}']]])
-                    echo "checkout from ${repoBranch}"
-                    echo "${params.name}"
-                    def msg = getChangeString()
-                    echo "${msg}"
+                    script{
+                        checkout([$class: 'GitSCM', branches: [[name: '*/dev']],
+                                  doGenerateSubmoduleConfigurations: false, extensions: [],
+                                  submoduleCfg: [], userRemoteConfigs: [[credentialsId: '6ef41d8b-2079-4ba1-bb68-f1a50f68853c',
+                                                                         url: '${repoUrl}']]])
+                        echo "checkout from ${repoBranch}"
+                        echo "${params.name}"
+                        msg = getChangeString()
+                        echo "${msg}"
+                    }
                 }
             }
         }
@@ -46,6 +48,5 @@ def getChangeString() {
     if (!changeString) {
         changeString = " - 无"
     }
-    echo "${changeString}"
     return changeString
 }
