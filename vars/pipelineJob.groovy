@@ -13,14 +13,14 @@ def call(Map params) {
         stages {
             stage('代码拉取并打包') {
                 steps {
-                    checkout([$class: 'GitSCM', branches: [[name: '*/main']],
-                              doGenerateSubmoduleConfigurations: false, extensions: [],
-                              submoduleCfg: [], userRemoteConfigs: [[credentialsId: '6ef41d8b-2079-4ba1-bb68-f1a50f68853c',
-                                                                     url: '${repoUrl}']]])
-                    echo "checkout from ${repoBranch}"
-                    echo "${params.name}"
-                    changeString = getChangeString()
-                    echo "${changeString}"
+//                    checkout([$class: 'GitSCM', branches: [[name: '*/main']],
+//                              doGenerateSubmoduleConfigurations: false, extensions: [],
+//                              submoduleCfg: [], userRemoteConfigs: [[credentialsId: '6ef41d8b-2079-4ba1-bb68-f1a50f68853c',
+//                                                                     url: '${repoUrl}']]])
+//                    echo "checkout from ${repoBranch}"
+//                    echo "${params.name}"
+//                    changeString = getChangeString()
+//                    echo "${changeString}"
                 }
             }
         }
