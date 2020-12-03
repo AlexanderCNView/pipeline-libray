@@ -11,7 +11,7 @@ def call(Map params) {
 
         }
         stages {
-            stage('代码拉取并打包') {
+            stage('代码拉取') {
                 steps {
                     checkout([$class: 'GitSCM', branches: [[name: '*/main']],
                               doGenerateSubmoduleConfigurations: false, extensions: [],
@@ -19,8 +19,8 @@ def call(Map params) {
                                                                      url: '${repoUrl}']]])
                     echo "checkout from ${repoBranch}"
                     echo "${params.name}"
-                    changeString = getChangeString()
-                    echo "${changeString}"
+                    ff = getChangeString()
+                    echo "${ff}"
                 }
             }
         }
