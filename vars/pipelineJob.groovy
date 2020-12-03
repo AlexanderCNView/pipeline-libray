@@ -45,5 +45,6 @@ def getChangeString() {
     if (!changeString) {
         changeString = " - 无"
     }
+    echo "${changeString}"
     return changeString
 }
