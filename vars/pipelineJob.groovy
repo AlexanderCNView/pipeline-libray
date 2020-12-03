@@ -15,10 +15,34 @@ def call(Map params) {
                 steps {
                     script {
                         echo "${params.name}"
+                        changeString = getChangeString()
+                        echo "${changeString}"
                     }
                 }
             }
         }
     }
 
+}
+
+@NonCPS
+def getChangeString() {
+    MAX_MSG_LEN = 100
+    def changeString = ""
+    echo "Gathering SCM changes"
+    def changeLogSets = currentBuild.changeSets
+    for (int i = 0; i < changeLogSets.size(); i++) {
+        def entries = changeLogSets[i].items
+        for (int j = 0; j < entries.length; j++) {
+            def entry = entries[j]
+            truncated_msg = entry.msg.take(MAX_MSG_LEN)
+            sendMail = sendMail+"${entry.author}@demo.com,"
+            changeString += "--${truncated_msg}  [${entry.author}]\n"
+        }
+    }
+
+    if (!changeString) {
+        changeString = " - 无"
+    }
+    return changeString
 }
