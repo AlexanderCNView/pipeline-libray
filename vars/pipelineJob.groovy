@@ -5,22 +5,17 @@ def call(Map params) {
         agent any
         parameters {
             //git代码路径【参数值对外隐藏】
-            string(name:'repoUrl', defaultValue: 'https://github.com/AlexanderCNView/pipeline-libray.git', description: 'git代码路径')
+            string(name:'repoUrl', defaultValue: 'git@git.*****.com:*****/*****.git', description: 'git代码路径')
             //repoBranch参数后续替换成git parameter不再依赖手工输入,JENKINS-46451【git parameters目前还不支持pipeline】
-            string(name:'repoBranch', defaultValue: 'main', description: 'git分支名称')
+            string(name:'repoBranch', defaultValue: 'master', description: 'git分支名称')
 
         }
         stages {
-            stage('代码拉取并打包') {
+            stage("第一步") {
                 steps {
-//                    checkout([$class: 'GitSCM', branches: [[name: '*/main']],
-//                              doGenerateSubmoduleConfigurations: false, extensions: [],
-//                              submoduleCfg: [], userRemoteConfigs: [[credentialsId: '6ef41d8b-2079-4ba1-bb68-f1a50f68853c',
-//                                                                     url: '${repoUrl}']]])
-//                    echo "checkout from ${repoBranch}"
-//                    echo "${params.name}"
-//                    changeString = getChangeString()
-//                    echo "${changeString}"
+                    script {
+                        echo "${params.name}"
+                    }
                 }
             }
         }
