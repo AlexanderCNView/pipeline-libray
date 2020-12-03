@@ -19,7 +19,8 @@ def call(Map params) {
                                                                      url: '${repoUrl}']]])
                     echo "checkout from ${repoBranch}"
                     echo "${params.name}"
-                    getChangeString()
+                    def msg = getChangeString()
+                    echo "${msg}"
                 }
             }
         }
