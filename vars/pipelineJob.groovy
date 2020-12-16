@@ -20,11 +20,11 @@ def call(Map params) {
             stage('代码拉取') {
                 steps {
                     script{
-                        checkout([$class: 'GitSCM', branches: [[name: '*/dev']],
+                        checkout([$class: 'GitSCM', branches: [[name: "${BRANCH_TAG}"]],
                                   doGenerateSubmoduleConfigurations: false, extensions: [],
                                   submoduleCfg: [], userRemoteConfigs: [[credentialsId: '6ef41d8b-2079-4ba1-bb68-f1a50f68853c',
                                                                          url: '${repoUrl}']]])
-                        echo "checkout from ${repoBranch}"
+                        echo "checkout from ${BRANCH_TAG}"
                         echo "${params.name}"
                         msg = getChangeString()
                         echo "${msg}"
