@@ -7,7 +7,13 @@ def call(Map params) {
             //git代码路径【参数值对外隐藏】
             string(name:'repoUrl', defaultValue: 'https://github.com/AlexanderCNView/pipeline-libray.git', description: 'git代码路径')
             //repoBranch参数后续替换成git parameter不再依赖手工输入,JENKINS-46451【git parameters目前还不支持pipeline】
-            string(name:'repoBranch', defaultValue: 'main', description: 'git分支名称')
+            gitParameter name: 'BRANCH_TAG',
+                    type: 'PT_BRANCH_TAG',
+                    branchFilter: 'origin/(.*)',
+                    defaultValue: 'main',
+                    selectedValue: 'DEFAULT',
+                    sortMode: 'DESCENDING_SMART',
+                    description: '选择分支或者tag'
 
         }
         stages {
